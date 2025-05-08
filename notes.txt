@@ -1,0 +1,24 @@
+
+
+There is something with this exec function
+
+import dagger
+import asyncio
+
+async def main():
+    async with dagger.Connection() as client:
+        ctr = client.container().from_("alpine")
+        result = await ctr.with_exec(["echo", "hello from dagger"]).stdout()
+        print(result)
+
+asyncio.run(main())
+
+
+example in python, valid also for go.
+There must be something about how to run those commands in dagger. 
+I don't understand the shit very well. 
+Do I need to?
+
+Let's see tomorrow :) 
+
+Keep on coding

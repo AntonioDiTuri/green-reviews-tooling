@@ -89,8 +89,22 @@ func WaitForReadyPods(namespace string) []string {
 		"--namespace",
 		namespace,
 		"--timeout",
-		"300s",
+		"30s",
 		"--for",
 		"condition=Ready",
+	}
+}
+
+func GetPodName(namespace string, podName string) []string {
+	return []string{
+		"kubectl",
+		"get",
+		"pods",
+		"-n",
+		namespace,
+		"-l",
+		"app=" + podName,
+		"-o",
+		"name",
 	}
 }

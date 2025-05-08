@@ -38,6 +38,15 @@ make install
 
 - Add `DAGGER_ENGINE_POD_NAME` and `_EXPERIMENTAL_DAGGER_RUNNER_HOST` env vars to your shell. See https://docs.dagger.io/integrations/kubernetes/#example
 
+```
+DAGGER_ENGINE_POD_NAME="$(kubectl get pod \
+    --selector=name=dagger-dagger-helm-engine --namespace=dagger \
+    --output=jsonpath='{.items[0].metadata.name}')"
+export DAGGER_ENGINE_POD_NAME
+_EXPERIMENTAL_DAGGER_RUNNER_HOST="kube-pod://$DAGGER_ENGINE_POD_NAME?namespace=dagger"
+export _EXPERIMENTAL_DAGGER_RUNNER_HOST
+```
+
 - Bootstrap cluster with flux and monitoring stack.
 
 ```sh

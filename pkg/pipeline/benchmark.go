@@ -50,8 +50,17 @@ func (p *Pipeline) Benchmark(ctx context.Context,
 	version,
 	benchmarkJobURL string,
 	benchmarkJobDurationMins int) (*dagger.Container, error) {
+
 	if _, err := p.benchmark(ctx, cncfProject, config, version, benchmarkJobURL, benchmarkJobDurationMins); err != nil {
 		log.Printf("benchmark failed: %v", err)
+	}
+
+	// if err := monitoring.ComputeBenchmarkingResults(ctx, p); err != nil {
+	// 	log.Printf("failed to fetch metrics: %v", err)
+	// }
+
+	if _, err := p.report(ctx, cncfProject, config, version, benchmarkJobURL, benchmarkJobDurationMins); err != nil {
+		p.echo(ctx, "report failed")
 	}
 
 	if _, err := p.delete(ctx, cncfProject, config, benchmarkJobURL); err != nil {

@@ -42,10 +42,13 @@ setup:
 		--source=. --kubeconfig=/src/$(KUBECONFIG)
 
 # Test pipeline with default values
+# Before make test --web do login
+# do login with github in dagger web-ui https://dagger.cloud/
+# dagger login  && dagger call -m github.com/shykes/daggerverse/hello@v0.3.0 hello
 .PHONY: test
 test:
 	dagger call benchmark-pipeline-test \
-		--source=. --kubeconfig=/src/$(KUBECONFIG)
+		--source=. --kubeconfig=/src/$(KUBECONFIG) --web\
 
 # Verify tools are installed
 .PHONY: verify
